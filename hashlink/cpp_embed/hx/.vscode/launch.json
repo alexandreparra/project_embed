@@ -1,0 +1,14 @@
+{
+	"configurations": [
+        {
+            "name": "HashLink",
+            "request": "launch",
+            "type": "hl",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": {
+                "type": "haxe",
+                "args": "active configuration"
+            }
+        }
+	]
+}

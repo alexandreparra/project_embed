@@ -1,0 +1,3 @@
+[submodule "hashlink/cpp_embed/external/hashlink"]
+	path = hashlink/cpp_embed/external/hashlink
+	url = https://github.com/HaxeFoundation/hashlink.git
