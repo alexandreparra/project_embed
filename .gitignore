@@ -1,5 +1,6 @@
 .vs/
 .idea/
 out/
+bin/
 build/
 cmake-build-*/

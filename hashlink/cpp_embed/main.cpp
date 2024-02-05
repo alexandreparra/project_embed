@@ -151,9 +151,10 @@ int wmain(int argc, pchar *argv[]) {
 #endif
 
     // Hashlink originally receives the file_path path to start execution from the system args.
-    // As we are embedding haxe/hashlink into this project, it's probably better to point the
-    // location of the file_path from within our native code. We need to point to the already compiled
-    // .hl main file. Here the execution of the binary is set to the project /bin folder that is created through CMake.
+    // As we are embedding Haxe/Hashlink we can optionally provide the path from within our code. 
+    // Be aware that this is a relative path and depends from where you are executing the code.
+    // In our case, using the compile.ps1 file we'll be executing our binary inside /bin folder,
+    // so the current string finds our Hashlink file correctly. Change this according to your setup.
     std::string file_path = "../hx/main.hl";
 
     static vclosure cl;
