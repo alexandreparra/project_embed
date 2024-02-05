@@ -9,3 +9,8 @@ It has been used in games like War Thunder, [Left 4 Dead 2](https://developer.va
 and [OpenTTD](https://github.com/OpenTTD/OpenTTD).
 
 This project has already all the dependencies available through git submodules. To compile for Windows, simply run the `compile.ps1` script in the current example folder using the Developer Powershell that can be download with [Visual Studio](https://visualstudio.microsoft.com/).
+
+## Tested and working on:
+| Platform                                    | Architecture              |
+|---------------------------------------------|---------------------------|
+| Windows 11                                  | x86_64                    |
