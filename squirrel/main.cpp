@@ -5,6 +5,8 @@
 #include <sqstdio.h>
 #include <sqstdaux.h>
 
+// -------------------------------------
+// Print functions
 void squirrel_print_error(HSQUIRRELVM vm, const SQChar* fmt, ...)
 {
     va_list vl;
@@ -21,6 +23,8 @@ void squirrel_print(HSQUIRRELVM vm, const SQChar* fmt, ...)
     va_end(vl);
 }
 
+// -------------------------------------
+// Squirrel functions
 void squirrel_triangle_area(HSQUIRRELVM vm, float base, float height)
 {
     SQInteger top = sq_gettop(vm);
@@ -29,14 +33,20 @@ void squirrel_triangle_area(HSQUIRRELVM vm, float base, float height)
     sq_pushstring(vm, _SC("triangle_area"), -1);
     if (SQ_SUCCEEDED(sq_get(vm, -2)))
     {
+        // We pass the parameters in, first the root table.
+        // Then we pass the parameters with the same sequence
+        // from what we defined in Squirrel.
         sq_pushroottable(vm);
         sq_pushfloat(vm, base);
         sq_pushfloat(vm, height);
-        sq_call(vm, 3, SQFalse, SQTrue);
+        // Pass SQTrue so that the returned value from the Squirrel function is pushed
+        // to the top of the stack.
+        sq_call(vm, 3, SQTrue, SQTrue);
 
+        // Retrieve the returned value from the top of the stack.
         float ret = 0.0;
-        if (sq_getfloat(vm, -1, &ret) == SQ_OK) {
-            std::cout << "Got value from triangle_area back " << ret << '\n';
+        if (SQ_SUCCEEDED(sq_getfloat(vm, -1, &ret))) {
+            std::cout << "C++: Got value from triangle_area back: " << ret << '\n';
         }
     }
 
@@ -45,6 +55,7 @@ void squirrel_triangle_area(HSQUIRRELVM vm, float base, float height)
 
 void squirrel_log(HSQUIRRELVM vm)
 {
+    // Save the top of the stack for later.
 	SQInteger top = sq_gettop(vm);
     sq_pushroottable(vm);
 
@@ -75,8 +86,11 @@ int main()
     // a normal print function and an error function. Differently from above, this is meant
     // to be used by Squirrel print functions.
     sq_setprintfunc(vm, squirrel_print, squirrel_print_error);
-
     sq_pushroottable(vm);
+
+    // sqstd_dofile is an utility function from the Squirrel standard library that helps us compile
+    // our .nut files into bytecode. If you want to do it by hand, you can follow the example from the
+    // Squirrel reference: http://squirrel-lang.org/squirreldoc/reference/embedding/compiling_a_script.html
     if (SQ_SUCCEEDED(sqstd_dofile(vm, _SC("example.nut"), SQFalse, SQTrue))) // also prints syntax errors if any
     {
         squirrel_log(vm);
