@@ -25,6 +25,8 @@ void squirrel_print(HSQUIRRELVM vm, const SQChar* fmt, ...)
 
 // -------------------------------------
 // Squirrel functions
+
+// An example function call with 2 parameters and a return value.
 void squirrel_triangle_area(HSQUIRRELVM vm, float base, float height)
 {
     SQInteger top = sq_gettop(vm);
@@ -53,17 +55,20 @@ void squirrel_triangle_area(HSQUIRRELVM vm, float base, float height)
     sq_settop(vm, top);
 }
 
+// An example function call with no parameters and no return value.
 void squirrel_log(HSQUIRRELVM vm)
 {
     // Save the top of the stack for later.
 	SQInteger top = sq_gettop(vm);
     sq_pushroottable(vm);
 
-    // Here we push the name of the function we want to call, then correctly getting its reference,
-    // we can call it passing the appropriate amount of parameters.
+    // Here we push the name of the function we want to call, then get its reference
+    // from the root table (that's why we use sq_get with -2 index).
     sq_pushstring(vm, _SC("log"), -1);
     if (SQ_SUCCEEDED(sq_get(vm, -2)))
     {
+        // Now we can pass in the parameters, in this case, the Squirrel
+        // function doesn't have any beside the root table.
         // root table always accounts as one parameter.
         sq_pushroottable(vm);
         sq_call(vm, 1, SQFalse, SQTrue);
@@ -91,7 +96,7 @@ int main()
     // sqstd_dofile is an utility function from the Squirrel standard library that helps us compile
     // our .nut files into bytecode. If you want to do it by hand, you can follow the example from the
     // Squirrel reference: http://squirrel-lang.org/squirreldoc/reference/embedding/compiling_a_script.html
-    if (SQ_SUCCEEDED(sqstd_dofile(vm, _SC("example.nut"), SQFalse, SQTrue))) // also prints syntax errors if any
+    if (SQ_SUCCEEDED(sqstd_dofile(vm, _SC("example.nut"), SQFalse, SQTrue)))
     {
         squirrel_log(vm);
         squirrel_triangle_area(vm, 10, 5);

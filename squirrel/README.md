@@ -12,6 +12,8 @@ and [OpenTTD](https://github.com/OpenTTD/OpenTTD).
 Here we are going to compile the Squirrel virtual machine and standard library. The standard library can help us setting up some initial dependencies, like the functions needed to compile Squirrel code.
 Each function has comments on why we are using it, so that you can sequentially read the code and understand what it does.
 
+As Squirrel has a stack based virtual machine, we need to manipulate its state a lot and understand how it works, so its a good idea to get used to [Stack data structures](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)).
+
 This project has already all the dependencies available through git submodules. To compile for Windows, simply run the `compile.ps1` script in the current example folder using the Developer Powershell that can be download with [Visual Studio](https://visualstudio.microsoft.com/).
 
 For more informations about the language, visit the [Squirrel reference](http://squirrel-lang.org/squirreldoc/reference/index.html).
